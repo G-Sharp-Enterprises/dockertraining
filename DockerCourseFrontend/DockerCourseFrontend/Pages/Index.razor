@@ -1,0 +1,28 @@
+﻿@page "/"
+@inject HttpClient HttpClient
+
+<PageTitle>Index</PageTitle>
+
+<h1>Hello, world!</h1>
+
+<button class="btn btn-primary" @onclick="GetAlbums">Get Albums</button>
+
+@if (_albums is not null)
+{
+    <ul>
+        @foreach (var album in _albums)
+        {
+            <li>@album</li>
+        }
+    </ul>
+}
+
+@code {
+    private List<string>? _albums;
+
+    private async Task GetAlbums()
+    {
+        _albums = await HttpClient.GetFromJsonAsync<List<string>>("https://localhost:1234/albums");
+    }
+
+}
